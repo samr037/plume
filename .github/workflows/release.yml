@@ -1,0 +1,48 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  dmg:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Versions
+        run: |
+          sw_vers
+          swift --version
+
+      - name: Tests
+        run: WL_BUILD="$RUNNER_TEMP/build" scripts/test.sh
+
+      - name: Build Plume.app
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then VERSION="${GITHUB_REF_NAME#v}"; else VERSION="0.0.0-${GITHUB_SHA::7}"; fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          WL_SIGN=- WL_BUILD="$RUNNER_TEMP/build" WL_APP="$PWD/dist/Plume.app" WL_VERSION="$VERSION" scripts/build-app.sh
+
+      - name: DMG
+        run: |
+          scripts/make-dmg.sh dist/Plume.app "dist/Plume-$VERSION.dmg"
+          shasum -a 256 "dist/Plume-$VERSION.dmg" | tee "dist/Plume-$VERSION.dmg.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Plume-${{ env.VERSION }}
+          path: dist/Plume-*.dmg*
+
+      - name: Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/Plume-$VERSION.dmg dist/Plume-$VERSION.dmg.sha256 \
+            --title "Plume $VERSION" \
+            --notes "Glissez Plume dans Applications, puis à la première ouverture : Réglages Système › Confidentialité et sécurité › Ouvrir quand même. Les modèles (environ 4 Go) se téléchargent au premier lancement."

@@ -1,0 +1,6 @@
+.build/
+.swiftpm/
+*.xcodeproj
+.impeccable/review/
+.impeccable/build/
+dist/

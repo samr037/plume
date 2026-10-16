@@ -1,0 +1,28 @@
+Installer Plume
+===============
+
+Plume demande un Mac Apple Silicon (M1 ou plus récent) sous macOS 14 ou plus,
+et environ 5 Go d'espace libre.
+
+1. Glissez Plume dans le dossier Applications.
+
+2. Ouvrez Plume depuis Applications. macOS refuse la première fois, car l'app
+   n'est pas signée par un développeur Apple identifié :
+   - ouvrez Réglages Système › Confidentialité et sécurité ;
+   - descendez jusqu'au message sur Plume et cliquez sur « Ouvrir quand même » ;
+   - confirmez avec votre mot de passe.
+
+3. Le guide de bienvenue s'ouvre. Plume télécharge ses modèles (environ 4 Go)
+   pendant que vous avancez dans le guide. Autorisez :
+   - le Micro ;
+   - l'Accessibilité (Réglages Système › Confidentialité et sécurité ›
+     Accessibilité › activer Plume).
+
+4. Pour dicter : maintenez la touche fn, parlez, relâchez. Le texte arrive là
+   où se trouve le curseur.
+
+Après une mise à jour, macOS peut demander de réactiver Plume dans
+Accessibilité : décochez puis recochez Plume dans la liste.
+
+Tout fonctionne sur ce Mac : aucun compte, aucun envoi de voix ou de texte sur
+Internet. Seuls les modèles sont téléchargés, une fois, depuis Hugging Face.
