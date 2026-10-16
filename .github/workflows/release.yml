@@ -12,7 +12,7 @@ jobs:
   dmg:
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Versions
         run: |
@@ -33,7 +33,7 @@ jobs:
           scripts/make-dmg.sh dist/Plume.app "dist/Plume-$VERSION.dmg"
           shasum -a 256 "dist/Plume-$VERSION.dmg" | tee "dist/Plume-$VERSION.dmg.sha256"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: Plume-${{ env.VERSION }}
           path: dist/Plume-*.dmg*
