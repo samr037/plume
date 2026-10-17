@@ -13,6 +13,12 @@ Dictée vocale pour macOS, 100 % locale : la voix et le texte ne quittent jamais
 &nbsp;
 ![Licence MIT](https://img.shields.io/badge/licence-MIT-555c59?style=for-the-badge)
 
+[![Tests](https://github.com/samr037/plume/actions/workflows/ci.yml/badge.svg)](https://github.com/samr037/plume/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/samr037/plume/actions/workflows/codeql.yml/badge.svg)](https://github.com/samr037/plume/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/samr037/plume/badge)](https://scorecard.dev/viewer/?uri=github.com/samr037/plume)
+[![Provenance](https://img.shields.io/badge/DMG-provenance%20sign%C3%A9e-0f6b62?logo=sigstore&logoColor=white)](SECURITY.md#vérifier-un-téléchargement)
+[![Téléchargements](https://img.shields.io/github/downloads/samr037/plume/total?label=t%C3%A9l%C3%A9chargements&color=555c59)](../../releases)
+
 <img src="docs/media/plume-demo.gif" width="820" alt="Démo : on maintient fn, on dicte un mail en hésitant, Plume colle un texte propre en moins d'une demi-seconde" />
 
 <sub>*Local voice dictation for macOS (Apple Silicon). Hold fn, speak, release: Plume transcribes, cleans up and pastes at the cursor. Nothing leaves your Mac. The interface is available in English.*</sub>
@@ -67,6 +73,19 @@ Sélectionnez un texte et réécrivez-le (⌃⌥1…9 : plus court, plus formel,
 <td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/scratchpad-dark.png" /><img src="docs/media/scratchpad-light.png" alt="Bloc-notes à dicter" /></picture><p align="center"><sub>Bloc-notes (⌃⌥N)</sub></p></td>
 </tr>
 </table>
+
+## Confidentialité
+
+Plume n'a ni compte, ni télémétrie, ni serveur. Le réseau sert à une seule chose : télécharger les modèles au premier lancement.
+
+| Connexion | Quand | Où le vérifier |
+|---|---|---|
+| Hugging Face : Parakeet, VAD, diarisation (FluidAudio) | Premier lancement | [`Engines.swift`](Sources/Plume/Engines.swift) |
+| Hugging Face : Qwen3.5 4B (≈ 3 Go) | Premier lancement | [`Downloads.swift`](Sources/Plume/Downloads.swift) |
+| Hugging Face : Whisper | Seulement si vous choisissez Whisper | [`Engines.swift`](Sources/Plume/Engines.swift) |
+| `127.0.0.1:8081` (llama-server embarqué) | À chaque dictée, sans quitter le Mac | [`Engines.swift`](Sources/Plume/Engines.swift) |
+
+Une fois les modèles en place, rien de ce que vous dictez ne sort du Mac. Pour signaler une faille : [SECURITY.md](SECURITY.md).
 
 ## Installer
 
