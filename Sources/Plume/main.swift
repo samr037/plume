@@ -19,7 +19,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         do {
-            store = try Store(path: AppSettings.supportDirectory.appendingPathComponent("plume.sqlite").path)
+            // WL_DB : base alternative (démo, captures d'écran) ; la vraie base n'est alors pas ouverte.
+            let dbPath = ProcessInfo.processInfo.environment["WL_DB"].map { ($0 as NSString).expandingTildeInPath }
+                ?? AppSettings.supportDirectory.appendingPathComponent("plume.sqlite").path
+            store = try Store(path: dbPath)
         } catch {
             let alert = NSAlert()
             alert.messageText = "Base de données inaccessible"
@@ -42,8 +45,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Task {
                 controller.startEngines()
                 try? await Task.sleep(nanoseconds: 8_000_000_000)
-                state.accessibilityGranted = AXIsProcessTrusted()
-                state.microphoneGranted = AudioRecorder.hasPermission
+                // Base de démo (WL_DB) : captures publiques, sans le bandeau d'autorisations de la machine qui rend.
+                let demo = ProcessInfo.processInfo.environment["WL_DB"] != nil
+                state.accessibilityGranted = demo || AXIsProcessTrusted()
+                state.microphoneGranted = demo || AudioRecorder.hasPermission
                 let actions = MeetingActions(summarize: { _ in }, setDetection: { _ in })
                 for dark in [false, true] {
                     let suffix = dark ? "dark" : "light"

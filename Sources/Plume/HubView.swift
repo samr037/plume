@@ -262,7 +262,7 @@ private struct HomePage: View {
         Card {
             VStack(alignment: .leading, spacing: 11) {
                 SectionTitle(text: "Moteurs locaux")
-                EngineRow(name: "Whisper large-v3 turbo", detail: stats.value.asr > 0 ? "\(stats.value.asr) ms" : nil, ok: state.asrReady,
+                EngineRow(name: settings.asrEngine == "whisper" ? "Whisper large-v3 turbo" : "Parakeet", detail: stats.value.asr > 0 ? "\(stats.value.asr) ms" : nil, ok: state.asrReady,
                           status: state.asrReady ? nil : state.asrStatus)
                 EngineRow(name: "LLM · \(URL(fileURLWithPath: settings.llmModelPath).deletingPathExtension().lastPathComponent)",
                           detail: stats.value.llm > 0 ? "\(stats.value.llm) ms" : nil, ok: state.llmReady, status: state.llmReady ? nil : state.llmStatus)
@@ -400,7 +400,7 @@ private struct VoicePipeline: View {
                 }
                 .frame(height: 12)
                 HStack(spacing: 16) {
-                    legend("Whisper", stats.asr, Theme.segASR)
+                    legend("Transcription", stats.asr, Theme.segASR)
                     legend("LLM", stats.llm, Theme.segLLM)
                     legend("Autres étapes (VAD, collage)", other, Theme.segPaste)
                     Spacer()

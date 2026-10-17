@@ -2,20 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key><string>io.github.samr037.plume</string>
-	<key>CFBundleName</key><string>Plume</string>
-	<key>CFBundleDisplayName</key><string>Plume</string>
-	<key>CFBundleExecutable</key><string>Plume</string>
-	<key>CFBundlePackageType</key><string>APPL</string>
-	<key>CFBundleShortVersionString</key><string>0.1.0</string>
-	<key>CFBundleVersion</key><string>1</string>
-	<key>LSMinimumSystemVersion</key><string>14.0</string>
-	<key>LSUIElement</key><true/>
-	<key>CFBundleDevelopmentRegion</key><string>fr</string>
-	<key>CFBundleLocalizations</key><array><string>fr</string><string>en</string></array>
-	<key>NSHighResolutionCapable</key><true/>
-	<key>NSAudioCaptureUsageDescription</key><string>Plume enregistre le son des réunions (Zoom, Meet, Teams…) pour en faire la transcription et le compte rendu, localement.</string>
-	<key>NSCalendarsFullAccessUsageDescription</key><string>Plume lit votre calendrier pour nommer les réunions et connaître leurs participants.</string>
-	<key>NSMicrophoneUsageDescription</key><string>Plume enregistre votre voix pendant que vous maintenez fn, pour la transcrire localement.</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>fr</string>
+	<key>CFBundleDisplayName</key>
+	<string>Plume</string>
+	<key>CFBundleExecutable</key>
+	<string>Plume</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.samr037.plume</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>fr</string>
+		<string>en</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>Plume</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAudioCaptureUsageDescription</key>
+	<string>Plume enregistre le son des réunions (Zoom, Meet, Teams…) pour en faire la transcription et le compte rendu, localement.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Plume lit votre calendrier pour nommer les réunions et connaître leurs participants.</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Plume enregistre votre voix pendant que vous maintenez fn, pour la transcrire localement.</string>
 </dict>
 </plist>

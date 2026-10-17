@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16857a"/>
+      <stop offset="1" stop-color="#0b4f48"/>
+    </linearGradient>
+    <linearGradient id="vane" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d9efe9"/>
+    </linearGradient>
+  </defs>
+  <!-- Gabarit macOS : carré arrondi de 824 px centré, marge 100 px -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="none" stroke="#ffffff" stroke-opacity=".12" stroke-width="4"/>
+  <!-- Plume : vexille asymétrique, barbes fendues, calamus courbé -->
+  <path d="M700 232 C 560 250, 420 360, 372 560 C 360 612, 352 660, 350 700
+           C 420 690, 470 660, 520 610 L 470 600 L 548 572
+           C 590 520, 620 470, 640 420 L 585 418 L 662 378
+           C 690 330, 705 280, 700 232 Z" fill="url(#vane)"/>
+  <path d="M700 232 C 600 330, 460 500, 362 694" fill="none" stroke="#0b4f48" stroke-width="14" stroke-linecap="round" stroke-opacity=".55"/>
+  <path d="M362 694 C 345 735, 332 775, 318 812" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+  <!-- Onde : trois traits sous la pointe -->
+  <g stroke="#9fe0d3" stroke-width="22" stroke-linecap="round">
+    <line x1="560" y1="760" x2="560" y2="800"/>
+    <line x1="610" y1="728" x2="610" y2="832"/>
+    <line x1="660" y1="748" x2="660" y2="812"/>
+    <line x1="710" y1="770" x2="710" y2="790"/>
+  </g>
+</svg>
