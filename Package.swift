@@ -5,7 +5,7 @@ let package = Package(
     name: "Plume",
     platforms: [.macOS(.v14)],
     dependencies: [
-        .package(url: "https://github.com/argmaxinc/argmax-oss-swift.git", exact: "1.1.0"),
+        .package(url: "https://github.com/argmaxinc/argmax-oss-swift.git", exact: "1.1.1"),
         // Silero VAD (et diarisation pour les réunions) en CoreML. 0.17.4 = 2026-09-25.
         .package(url: "https://github.com/FluidInference/FluidAudio.git", exact: "0.17.4"),
     ],
