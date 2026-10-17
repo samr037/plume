@@ -59,7 +59,7 @@
 "Rétablir les styles par défaut" = "Restore default styles";
 "Préférences apprises" = "Learned preferences";
 "Dites-les en mode Instruct (« à partir de maintenant, jamais de point d'exclamation sur Slack ») ou ajoutez-les ici." = "Say them in Instruct mode (“from now on, no exclamation marks on Slack”) or add them here.";
-"Préférence, ex. signer mes mails « Samy »" = "Preference, e.g. sign my emails “Samy”";
+"Préférence, ex. signer mes mails « Camille »" = "Preference, e.g. sign my emails “Camille”";
 "Portée (facultatif) : app:gmail" = "Scope (optional): app:gmail";
 "Ajouter" = "Add";
 "Aucune préférence pour l'instant." = "No preferences yet.";
@@ -123,7 +123,7 @@
 "Donnez une consigne au lieu de dicter" = "Give an instruction instead of dictating";
 "puis" = "then";
 ", parlez, relâchez." = ", speak, release.";
-"« Réécris la sélection plus poliment » · « Traduis en anglais » · « Résume ma dernière réunion » · « À partir de maintenant, signe mes mails Samy »" = "“Rewrite the selection more politely” · “Translate to French” · “Summarize my last meeting” · “From now on, sign my emails Samy”";
+"« Réécris la sélection plus poliment » · « Traduis en anglais » · « Résume ma dernière réunion » · « À partir de maintenant, signe mes mails Camille »" = "“Rewrite the selection more politely” · “Translate to French” · “Summarize my last meeting” · “From now on, sign my emails Camille”";
 "Vos consignes et leurs résultats apparaîtront ici." = "Your instructions and their results will appear here.";
 "Copier la réponse" = "Copy response";
 "Rechercher" = "Search";

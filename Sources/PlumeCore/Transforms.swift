@@ -13,6 +13,19 @@ public struct RewriteTransform: Codable, Identifiable, Equatable, Sendable {
         self.instruction = instruction
     }
 
+    /// Réécritures proposées au premier lancement, dans la langue de l'interface.
+    public static func defaults(english: Bool) -> [RewriteTransform] { english ? defaultsEnglish : defaults }
+
+    public static let defaultsEnglish: [RewriteTransform] = [
+        RewriteTransform(name: "More formal", instruction: "Make the text more formal and professional without making it longer."),
+        RewriteTransform(name: "Shorter", instruction: "Cut the text roughly in half while keeping every useful piece of information."),
+        RewriteTransform(name: "Fix", instruction: "Only fix spelling, grammar and punctuation. Change neither the tone nor the wording."),
+        RewriteTransform(name: "Warmer", instruction: "Make the tone warmer and friendlier, without overdoing it."),
+        RewriteTransform(name: "As a list", instruction: "Turn the text into a concise list, one idea per line, each line starting with \"- \"."),
+        RewriteTransform(name: "To English", instruction: "Translate the text into natural English."),
+        RewriteTransform(name: "To French", instruction: "Translate the text into natural French."),
+    ]
+
     public static let defaults: [RewriteTransform] = [
         RewriteTransform(name: "Plus formel", instruction: "Rends le texte plus formel et professionnel, sans l'allonger."),
         RewriteTransform(name: "Plus court", instruction: "Raccourcis le texte d'environ moitié en gardant toutes les informations utiles."),

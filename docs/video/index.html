@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=1280, height=720" />
-<title>Plume — démo</title>
-<!-- Vidéo de présentation du README, rendue avec HyperFrames : npx hyperframes render -o plume-demo.mp4 -->
+<title>Plume — demo</title>
+<!-- README demo video (English). Render: npx hyperframes render -c index.html -o ../media/plume-demo.mp4 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=block" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -70,33 +70,33 @@
     <div class="stack">
       <img id="t-icon" src="icon.svg" alt="" />
       <h1 id="t-name">Plume</h1>
-      <p id="t-tag">Maintenez <b>fn</b>, parlez. C'est écrit.</p>
+      <p id="t-tag">Hold <b>fn</b>, speak. It's written.</p>
     </div>
   </section>
 
   <section id="demo" class="clip" data-start="3.2" data-duration="8" data-track-index="1">
     <div class="win" id="win">
-      <div class="bar"><div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#febc2e"></div><div class="dot" style="background:#28c840"></div><span class="t">Nouveau message</span></div>
-      <div class="field"><span>À :</span><span>Julie Moreau</span></div>
-      <div class="field"><span>Objet :</span><span>Devis cuisine</span></div>
+      <div class="bar"><div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#febc2e"></div><div class="dot" style="background:#28c840"></div><span class="t">New Message</span></div>
+      <div class="field"><span>To:</span><span>Julia Moore</span></div>
+      <div class="field"><span>Subject:</span><span>Kitchen quote</span></div>
       <div class="body"><span id="typed"></span><span class="caret" id="caret"></span></div>
     </div>
-    <div id="badge">0,45 s · sur ce Mac</div>
+    <div id="badge">0.45 s · on this Mac</div>
     <div id="spoken"></div>
     <div id="pill">
       <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       <div class="proc"><b></b><b></b><b></b></div>
     </div>
     <div id="fn">fn</div>
-    <div id="fnlabel">maintenu pendant que vous parlez</div>
+    <div id="fnlabel">held while you speak</div>
   </section>
 
   <section id="features" class="clip" data-start="11.2" data-duration="3.4" data-track-index="1">
-    <h3 id="f-title">Tout reste sur votre Mac.</h3>
+    <h3 id="f-title">Everything stays on your Mac.</h3>
     <div class="row">
-      <div class="card"><div class="k">Local</div><h2>Aucun compte</h2><p>Transcription et mise au propre tournent sur la puce du Mac. Rien n'est envoyé.</p></div>
-      <div class="card"><div class="k">Styles</div><h2>Une voix par app</h2><p>Formel dans Mail, décontracté dans Messages, à votre goût ailleurs.</p></div>
-      <div class="card"><div class="k">Réunions</div><h2>Comptes rendus</h2><p>Transcription des appels, interlocuteurs séparés, tâches à suivre.</p></div>
+      <div class="card"><div class="k">Local</div><h2>No account</h2><p>Transcription and cleanup run on your Mac's chip. Nothing is sent anywhere.</p></div>
+      <div class="card"><div class="k">Styles</div><h2>A voice per app</h2><p>Formal in Mail, casual in Messages, your way everywhere else.</p></div>
+      <div class="card"><div class="k">Meetings</div><h2>Instant notes</h2><p>Call transcripts, speakers told apart, action items ready.</p></div>
     </div>
   </section>
 
@@ -105,17 +105,17 @@
       <img id="o-icon" src="icon.svg" alt="" />
       <h1>Plume</h1>
       <div class="url">github.com/samr037/plume</div>
-      <div class="meta">Gratuit · open source (MIT) · Mac Apple Silicon</div>
+      <div class="meta">Free · open source (MIT) · Apple Silicon Macs</div>
     </div>
   </section>
 </div>
 
 <script>
   // Mots prononcés (bruts) puis texte collé (mis au propre).
-  const spoken = "euh bonjour Julie… merci pour votre retour… euh je vous envoie le devis signé ce soir".split(" ");
+  const spoken = "um hi Julia… thanks for getting back to me… uh I'll send the signed quote tonight".split(" ");
   const spokenEl = document.getElementById("spoken");
   spokenEl.innerHTML = spoken.map(w => `<span class="w">${w} </span>`).join("");
-  document.getElementById("typed").textContent = "Bonjour Julie,\n\nMerci pour votre retour. Je vous envoie le devis signé ce soir.";
+  document.getElementById("typed").textContent = "Hi Julia,\n\nThanks for getting back to me. I'll send the signed quote tonight.";
 
   const tl = gsap.timeline({ paused: true });
 

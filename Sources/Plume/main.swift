@@ -72,8 +72,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     // Base temporaire : le brouillon d'exemple ne doit jamais atteindre la vraie base.
                     let tmpStore = try! Store(path: FileManager.default.temporaryDirectory.appendingPathComponent("wl-snap-\(UUID()).sqlite").path)
                     let pad = ScratchpadModel(store: tmpStore)
-                    pad.preview([Note(id: 1, body: "Courses chantier\n- 4 sacs de ciment\n- 2 rouleaux de câble 2,5 mm²\n- boîtes d'encastrement", pinned: true),
-                                 Note(id: 2, body: "Mail à Marc pour jeudi"), Note(id: 3)], selected: 1)
+                    let english = Locale.preferredLanguages.first?.hasPrefix("en") == true
+                    pad.preview([Note(id: 1, body: english ? "Hardware store\n- 4 bags of cement\n- 2 rolls of 12-gauge wire\n- junction boxes"
+                                                           : "Courses chantier\n- 4 sacs de ciment\n- 2 rouleaux de câble 2,5 mm²\n- boîtes d'encastrement",
+                                      pinned: true),
+                                 Note(id: 2, body: english ? "Email Mark about Thursday" : "Mail à Marc pour jeudi"), Note(id: 3)], selected: 1)
                     pad.targetApp = NSRunningApplication.current
                     await Snapshot.render(ScratchpadView(model: pad, settings: AppSettings.shared, rewrite: { _, _ in nil }, send: { _ in }),
                                           size: NSSize(width: 720, height: 460), dark: dark, to: dir.appendingPathComponent("scratchpad-\(suffix).png"))
@@ -228,7 +231,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Task { @MainActor in self?.state.microphoneGranted = AudioRecorder.hasPermission }
         }
         if OnboardingController.isDone {
-            checkAccessibility(prompt: true)
+            // La fenêtre système d'Accessibilité ne s'affiche qu'une fois par installation ; ensuite, le bandeau de l'accueil
+            // (« Ouvrir les Réglages ») suffit, sans réapparaître à chaque lancement.
+            let d = UserDefaults.standard
+            checkAccessibility(prompt: !d.bool(forKey: "accessibilityPrompted"))
+            d.set(true, forKey: "accessibilityPrompted")
             if !hotkeysInstalled { showHub() }
         } else {
             // 1er lancement : le guide explique les autorisations avant que macOS ne les demande.

@@ -96,7 +96,7 @@ final class AppSettings: ObservableObject {
         if let data = d.data(forKey: "transforms"), let t = try? JSONDecoder().decode([RewriteTransform].self, from: data) {
             transforms = t
         } else {
-            transforms = RewriteTransform.defaults
+            transforms = RewriteTransform.defaults(english: Locale.preferredLanguages.first?.hasPrefix("fr") != true)
         }
         if let data = d.data(forKey: "voices"), let v = try? JSONDecoder().decode([UserVoice].self, from: data), !v.isEmpty {
             voices = v

@@ -1,27 +1,29 @@
-# Sécurité
+# Security
 
-## Signaler une faille
+## Reporting a vulnerability
 
-Utilisez **[Signaler une vulnérabilité](../../security/advisories/new)** (onglet Security du dépôt) : le rapport reste privé jusqu'à sa correction. N'ouvrez pas d'issue publique pour une faille.
+Use **[Report a vulnerability](../../security/advisories/new)** (Security tab of this repository): the report stays private until it is fixed. Please don't open a public issue for a vulnerability.
 
-Indiquez la version de Plume, la version de macOS et, si possible, les étapes pour reproduire. Réponse visée sous 7 jours.
+Include the Plume version, the macOS version and, if possible, steps to reproduce. Expect a reply within 7 days.
 
-## Versions suivies
+## Supported versions
 
-Seule la dernière release reçoit des correctifs.
+Only the latest release receives fixes.
 
-## Ce que Plume protège
+## What Plume protects
 
-- La voix et le texte restent sur le Mac. Le serveur de mise au propre (`llama-server`) écoute uniquement sur `127.0.0.1`.
-- L'historique est une base SQLite dans `~/Library/Application Support/Plume`, accessible au seul compte utilisateur.
-- Le réseau sert uniquement à télécharger les modèles depuis Hugging Face au premier lancement.
+- Your voice and text stay on your Mac. The cleanup server (`llama-server`) listens on `127.0.0.1` only.
+- History is a SQLite database in `~/Library/Application Support/Plume`, readable only by your user account.
+- The network is used only to download models from Hugging Face on first launch.
 
-## Vérifier un téléchargement
+## Verifying a download
 
-Chaque DMG publié porte une attestation de provenance signée par GitHub Actions :
+Every published DMG carries a provenance attestation signed by GitHub Actions:
 
 ```sh
 gh attestation verify Plume-x.y.z.dmg -R samr037/plume
 ```
 
-L'app n'est pas notarisée par Apple (pas de certificat Developer ID) : macOS demande une confirmation à la première ouverture.
+The Sigstore bundle (`.sigstore.json`) is attached to each release for offline verification.
+
+The app is not notarized by Apple (no Developer ID certificate): macOS asks for confirmation the first time you open it.

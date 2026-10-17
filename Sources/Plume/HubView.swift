@@ -629,7 +629,7 @@ private struct VoicePage: View {
                     Text("Dites-les en mode Instruct (« à partir de maintenant, jamais de point d'exclamation sur Slack ») ou ajoutez-les ici.")
                         .font(.system(size: 13)).foregroundStyle(Theme.textSecondary)
                     HStack {
-                        TextField("Préférence, ex. signer mes mails « Samy »", text: $newPref.value).textFieldStyle(.roundedBorder)
+                        TextField("Préférence, ex. signer mes mails « Camille »", text: $newPref.value).textFieldStyle(.roundedBorder)
                         TextField("Portée (facultatif) : app:gmail", text: $newFilter.value).textFieldStyle(.roundedBorder).frame(width: 220)
                         Button("Ajouter") {
                             let f = newFilter.value.trimmingCharacters(in: .whitespaces)
@@ -1008,7 +1008,7 @@ private struct InstructPage: View {
                         Text(", parlez, relâchez.").font(.system(size: 15))
                     }
                     .foregroundStyle(Theme.text)
-                    Text("« Réécris la sélection plus poliment » · « Traduis en anglais » · « Résume ma dernière réunion » · « À partir de maintenant, signe mes mails Samy »")
+                    Text("« Réécris la sélection plus poliment » · « Traduis en anglais » · « Résume ma dernière réunion » · « À partir de maintenant, signe mes mails Camille »")
                         .font(.system(size: 13)).foregroundStyle(Theme.textSecondary)
                 }
             }

@@ -1,58 +1,58 @@
 <div align="center">
 
-<img src="docs/media/icon.png" width="112" alt="Icône de Plume" />
+<img src="docs/media/icon.png" width="112" alt="Plume icon" />
 
 # Plume
 
-**Maintenez fn, parlez. C'est écrit.**<br />
-Dictée vocale pour macOS, 100 % locale : la voix et le texte ne quittent jamais le Mac.
+**Hold fn, speak. It's written.**<br />
+Voice dictation for macOS that runs 100% on your Mac: your voice and your text never leave it.
 
-[![Télécharger](https://img.shields.io/github/v/release/samr037/plume?label=T%C3%A9l%C3%A9charger&color=0f6b62&style=for-the-badge)](../../releases/latest)
+[![Download](https://img.shields.io/github/v/release/samr037/plume?label=Download&color=0f6b62&style=for-the-badge)](../../releases/latest)
 &nbsp;
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B%20%C2%B7%20Apple%20Silicon-1b211f?style=for-the-badge&logo=apple)
 &nbsp;
-![Licence MIT](https://img.shields.io/badge/licence-MIT-555c59?style=for-the-badge)
+![MIT License](https://img.shields.io/badge/license-MIT-555c59?style=for-the-badge)
 
 [![Tests](https://github.com/samr037/plume/actions/workflows/ci.yml/badge.svg)](https://github.com/samr037/plume/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/samr037/plume/actions/workflows/codeql.yml/badge.svg)](https://github.com/samr037/plume/actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/samr037/plume/badge)](https://scorecard.dev/viewer/?uri=github.com/samr037/plume)
-[![Provenance](https://img.shields.io/badge/DMG-provenance%20sign%C3%A9e-0f6b62?logo=sigstore&logoColor=white)](SECURITY.md#vérifier-un-téléchargement)
-[![Téléchargements](https://img.shields.io/github/downloads/samr037/plume/total?label=t%C3%A9l%C3%A9chargements&color=555c59)](../../releases)
+[![Provenance](https://img.shields.io/badge/DMG-signed%20provenance-0f6b62?logo=sigstore&logoColor=white)](SECURITY.md#verifying-a-download)
+[![Downloads](https://img.shields.io/github/downloads/samr037/plume/total?color=555c59)](../../releases)
 
-<img src="docs/media/plume-demo.gif" width="820" alt="Démo : on maintient fn, on dicte un mail en hésitant, Plume colle un texte propre en moins d'une demi-seconde" />
+<img src="docs/media/plume-demo.gif" width="820" alt="Demo: hold fn, dictate an email with a few ums, and Plume pastes clean text in under half a second" />
 
-<sub>*Local voice dictation for macOS (Apple Silicon). Hold fn, speak, release: Plume transcribes, cleans up and pastes at the cursor. Nothing leaves your Mac. The interface is available in English.*</sub>
+<sub>English · [Français](README.fr.md)</sub>
 
 </div>
 
 ---
 
-## Ce que fait Plume
+## What Plume does
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🎙️ Dicter partout
-Maintenez **fn** dans n'importe quelle app, parlez, relâchez. Le texte arrive au curseur, ponctué, sans les « euh », en moins d'une seconde.
+### 🎙️ Dictate anywhere
+Hold **fn** in any app, speak, release. The text lands at your cursor, punctuated and free of "ums", in under a second.
 
-### ✍️ Une voix par app
-Formel dans Mail, décontracté dans Messages, sobre dans Slack. Chaque style se règle en une phrase.
+### ✍️ A voice per app
+Formal in Mail, casual in Messages, crisp in Slack. Each style is set in one sentence.
 
-### 🔒 Rien ne sort du Mac
-Pas de compte, pas de serveur. Transcription et mise au propre tournent sur la puce Apple. Seuls les modèles sont téléchargés, une fois.
+### 🔒 Nothing leaves your Mac
+No account, no server. Transcription and cleanup run on Apple silicon. Only the models are downloaded, once.
 
 </td>
 <td width="50%" valign="top">
 
-### 👥 Réunions
-Plume repère les appels (Meet, Zoom, Teams…), transcrit, sépare les interlocuteurs et rédige compte rendu, tâches et mail de suivi.
+### 👥 Meetings
+Plume spots calls (Meet, Zoom, Teams…), transcribes them, tells speakers apart and drafts notes, action items and a follow-up email.
 
-### ⚡ Réécrire et demander
-Sélectionnez un texte et réécrivez-le (⌃⌥1…9 : plus court, plus formel, en anglais…). Avec **⌃ puis fn**, demandez : « réponds-lui que c'est d'accord pour jeudi ».
+### ⚡ Rewrite and ask
+Select text and rewrite it (⌃⌥1…9: shorter, more formal, in French…). With **⌃ then fn**, just ask: "tell her Thursday works for me".
 
-### 📝 Bloc-notes
-**⌃⌥N** ouvre un bloc-notes à dicter, puis à envoyer dans l'app de votre choix.
+### 📝 Scratchpad
+**⌃⌥N** opens a notepad to dictate into, then send to the app of your choice.
 
 </td>
 </tr>
@@ -60,100 +60,102 @@ Sélectionnez un texte et réécrivez-le (⌃⌥1…9 : plus court, plus formel,
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-home-dark.png" />
-  <img src="docs/media/hub-home-light.png" alt="Accueil de Plume : raccourcis, temps de réponse, moteurs locaux et styles par application" />
+  <img src="docs/media/hub-home-light.png" alt="Plume home: shortcuts, response time, local engines and per-app styles" />
 </picture>
 
 <table>
 <tr>
-<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-voice-dark.png" /><img src="docs/media/hub-voice-light.png" alt="Ma voix : un style d'écriture par application" /></picture><p align="center"><sub>Ma voix : un style par application</sub></p></td>
-<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-history-dark.png" /><img src="docs/media/hub-history-light.png" alt="Historique des dictées, consultable et recherchable" /></picture><p align="center"><sub>Historique, recherchable, sur le Mac</sub></p></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-voice-dark.png" /><img src="docs/media/hub-voice-light.png" alt="My voice: one writing style per app" /></picture><p align="center"><sub>My voice: one style per app</sub></p></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-history-dark.png" /><img src="docs/media/hub-history-light.png" alt="Searchable dictation history" /></picture><p align="center"><sub>Searchable history, kept on your Mac</sub></p></td>
 </tr>
 <tr>
-<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-meetings-dark.png" /><img src="docs/media/hub-meetings-light.png" alt="Réunions : notes, transcription, tâches et mail de suivi" /></picture><p align="center"><sub>Réunions : notes, transcription, tâches</sub></p></td>
-<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/scratchpad-dark.png" /><img src="docs/media/scratchpad-light.png" alt="Bloc-notes à dicter" /></picture><p align="center"><sub>Bloc-notes (⌃⌥N)</sub></p></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/hub-meetings-dark.png" /><img src="docs/media/hub-meetings-light.png" alt="Meetings: notes, transcript, action items and follow-up email" /></picture><p align="center"><sub>Meetings: notes, transcript, action items</sub></p></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/scratchpad-dark.png" /><img src="docs/media/scratchpad-light.png" alt="Dictation scratchpad" /></picture><p align="center"><sub>Scratchpad (⌃⌥N)</sub></p></td>
 </tr>
 </table>
 
-## Confidentialité
+## Privacy
 
-Plume n'a ni compte, ni télémétrie, ni serveur. Le réseau sert à une seule chose : télécharger les modèles au premier lancement.
+Plume has no account, no telemetry and no server. It uses the network for one thing only: downloading models on first launch.
 
-| Connexion | Quand | Où le vérifier |
+| Connection | When | Where to check |
 |---|---|---|
-| Hugging Face : Parakeet, VAD, diarisation (FluidAudio) | Premier lancement | [`Engines.swift`](Sources/Plume/Engines.swift) |
-| Hugging Face : Qwen3.5 4B (≈ 3 Go) | Premier lancement | [`Downloads.swift`](Sources/Plume/Downloads.swift) |
-| Hugging Face : Whisper | Seulement si vous choisissez Whisper | [`Engines.swift`](Sources/Plume/Engines.swift) |
-| `127.0.0.1:8081` (llama-server embarqué) | À chaque dictée, sans quitter le Mac | [`Engines.swift`](Sources/Plume/Engines.swift) |
+| Hugging Face: Parakeet, VAD, diarization (FluidAudio) | First launch | [`Engines.swift`](Sources/Plume/Engines.swift) |
+| Hugging Face: Qwen3.5 4B (≈ 3 GB) | First launch | [`Downloads.swift`](Sources/Plume/Downloads.swift) |
+| Hugging Face: Whisper | Only if you pick Whisper | [`Engines.swift`](Sources/Plume/Engines.swift) |
+| `127.0.0.1:8081` (bundled llama-server) | Every dictation, without leaving the Mac | [`Engines.swift`](Sources/Plume/Engines.swift) |
 
-Une fois les modèles en place, rien de ce que vous dictez ne sort du Mac. Pour signaler une faille : [SECURITY.md](SECURITY.md).
+Once the models are in place, nothing you dictate leaves your Mac. To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
-## Installer
+## Install
 
 > [!NOTE]
-> Il faut un Mac Apple Silicon (M1 ou plus récent), macOS 14 ou plus, et environ 5 Go libres.
+> Requires an Apple Silicon Mac (M1 or later), macOS 14 or later, and about 5 GB of free space.
 
-1. Téléchargez `Plume-x.y.z.dmg` dans les **[Releases](../../releases/latest)** et glissez Plume dans Applications.
-2. Ouvrez Plume. macOS la bloque la première fois (app gratuite, sans certificat Apple payant) : **Réglages Système › Confidentialité et sécurité › Ouvrir quand même**.
-3. Suivez le guide de bienvenue. Plume télécharge ses modèles (≈ 4 Go, une barre suit la progression) et demande le **Micro** et l'**Accessibilité**.
+1. Download `Plume-x.y.z.dmg` from **[Releases](../../releases/latest)** and drag Plume to Applications.
+2. Open Plume. macOS blocks it the first time (free app, no paid Apple certificate): **System Settings › Privacy & Security › Open Anyway**.
+3. Follow the welcome guide. Plume downloads its models (≈ 4 GB, with a progress bar) and asks for **Microphone** and **Accessibility** access.
 
 > [!TIP]
-> Réglages Système › Clavier › « Appuyer sur 🌐 pour » → **Ne rien faire**, pour que fn ne déclenche pas les emojis.
+> System Settings › Keyboard › "Press 🌐 key to" → **Do Nothing**, so fn doesn't open the emoji picker.
 
-Après une mise à jour, macOS peut demander de réactiver Plume dans Accessibilité : décochez puis recochez-la.
+After an update, macOS may ask you to re-enable Plume under Accessibility: uncheck it, then check it again.
 
-## Raccourcis
+## Shortcuts
 
-<img src="docs/media/bar-recording.png" width="240" align="right" alt="Barre flottante pendant une dictée" />
+<img src="docs/media/bar-recording.png" width="240" align="right" alt="Floating bar during dictation" />
 
-| Geste | Effet |
+| Gesture | Action |
 |---|---|
-| Maintenir **fn** | Dicter ; relâcher colle le texte |
-| Double-tap **fn** ou **fn + espace** | Mains libres ; **fn** pour terminer |
-| **fn** + une autre touche, ou **Échap** | Annuler |
-| **⌃⌘V** | Recoller la dernière dictée |
-| **⌃⌥1…9** | Réécrire la sélection |
-| **⌃⌥N** | Bloc-notes |
-| **⌃** puis **fn** | Instruct : rédiger, traduire, répondre, retenir une préférence |
+| Hold **fn** | Dictate; release to paste |
+| Double-tap **fn** or **fn + space** | Hands-free; **fn** to finish |
+| **fn** + any other key, or **Esc** | Cancel |
+| **⌃⌘V** | Paste the last dictation again |
+| **⌃⌥1…9** | Rewrite the selection |
+| **⌃⌥N** | Scratchpad |
+| **⌃** then **fn** | Instruct: draft, translate, reply, remember a preference |
 
-La barre flottante se place sur n'importe quel bord de l'écran. Un clic lance une dictée mains libres, un clic droit ouvre le menu.
+The floating bar docks to any screen edge. Click it to start a hands-free dictation; right-click for the menu.
 
-## Sous le capot
+## Under the hood
 
 | | |
 |---|---|
-| Transcription | [Parakeet](https://huggingface.co/FluidInference) sur le Neural Engine (Core ML, via FluidAudio) ; Whisper large-v3 turbo en option (WhisperKit) |
-| Mise au propre | Qwen3.5 4B (GGUF) servi par [llama.cpp](https://github.com/ggml-org/llama.cpp), embarqué dans l'app |
-| Détection de voix | Silero VAD |
-| Interlocuteurs | Diarisation hors ligne (pyannote / WeSpeaker, Core ML) |
-| App | Swift natif, SwiftUI, SQLite ; aucune dépendance réseau hors téléchargement des modèles |
+| Transcription | [Parakeet](https://huggingface.co/FluidInference) on the Neural Engine (Core ML, via FluidAudio); Whisper large-v3 turbo optional (WhisperKit) |
+| Cleanup | Qwen3.5 4B (GGUF) served by [llama.cpp](https://github.com/ggml-org/llama.cpp), bundled in the app |
+| Voice detection | Silero VAD |
+| Speakers | Offline diarization (pyannote / WeSpeaker, Core ML) |
+| App | Native Swift, SwiftUI, SQLite; no network dependency beyond model downloads |
+
+The interface is available in English and French and follows your macOS language.
 
 <details>
-<summary><b>Compiler depuis les sources</b></summary>
+<summary><b>Build from source</b></summary>
 
 ```sh
 scripts/test.sh                      # tests
-WL_SIGN=- scripts/build-app.sh       # ~/Applications/Plume.app, signature ad hoc
+WL_SIGN=- scripts/build-app.sh       # ~/Applications/Plume.app, ad hoc signature
 scripts/make-dmg.sh ~/Applications/Plume.app dist/Plume.dmg
 ```
 
-Sans `WL_SIGN`, le script crée un certificat local « Plume Dev » : macOS garde alors l'autorisation d'Accessibilité d'un build à l'autre. Les releases sont produites par GitHub Actions à chaque tag `v*` (`.github/workflows/release.yml`).
+Without `WL_SIGN`, the script creates a local "Plume Dev" certificate so macOS keeps the Accessibility permission across builds. Releases are built by GitHub Actions on every `v*` tag (`.github/workflows/release.yml`).
 
-Diagnostic : `--selftest fichier.wav`, `--bench a.wav b.wav`, `--instruct "demande"`, `--snapshot <dossier>` (avec `WL_DB=<base de démo>` pour des captures sans données personnelles ; `wl-mcp --seed <chemin>` crée cette base).
+Diagnostics: `--selftest file.wav`, `--bench a.wav b.wav`, `--instruct "request"`, `--snapshot <dir>` (with `WL_DB=<demo db>` for screenshots without personal data; `WL_SEED_LANG=en wl-mcp --seed <path>` creates that database).
 
-La vidéo de démo est une composition [HyperFrames](https://github.com/heygen-com/hyperframes) : `cd docs/video && npx hyperframes render -o ../media/plume-demo.mp4`.
+The demo video is a [HyperFrames](https://github.com/heygen-com/hyperframes) composition: `cd docs/video && npx hyperframes render -c index.html -o ../media/plume-demo.mp4`.
 
-`wl-mcp` expose l'historique, les réunions et les tâches à un client MCP (voir [docs/mcp.md](docs/mcp.md)).
+`wl-mcp` exposes history, meetings and tasks to an MCP client (see [docs/mcp.md](docs/mcp.md), in French).
 
-**Architecture**
-- `Sources/PlumeCore` : machine d'états du raccourci, post-traitement, filtres, prompts, stockage SQLite (testé)
-- `Sources/MeetingKit` : détection des appels, capture micro et son système
-- `Sources/Plume` : app (raccourci global, audio, moteurs, collage, interface SwiftUI)
-- `Sources/wl-mcp` : serveur MCP local en lecture seule
+**Layout**
+- `Sources/PlumeCore`: hotkey state machine, post-processing, filters, prompts, SQLite storage (tested)
+- `Sources/MeetingKit`: call detection, microphone and system audio capture
+- `Sources/Plume`: the app (global hotkey, audio, engines, pasting, SwiftUI interface)
+- `Sources/wl-mcp`: local read-only MCP server
 
 </details>
 
-## Licence
+## License
 
-MIT, voir [LICENSE](LICENSE). Composants et modèles tiers : [THIRD_PARTY_NOTICES](Resources/THIRD_PARTY_NOTICES.md).
+MIT, see [LICENSE](LICENSE). Third-party components and models: [THIRD_PARTY_NOTICES](Resources/THIRD_PARTY_NOTICES.md).
 
-Plume est un projet indépendant, sans lien avec un autre éditeur de logiciel de dictée.
+Plume is an independent project, not affiliated with any other dictation software vendor.
