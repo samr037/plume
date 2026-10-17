@@ -37,7 +37,7 @@ jobs:
       - name: DMG
         run: |
           scripts/make-dmg.sh dist/Plume.app "dist/Plume-$VERSION.dmg"
-          shasum -a 256 "dist/Plume-$VERSION.dmg" | tee "dist/Plume-$VERSION.dmg.sha256"
+          (cd dist && shasum -a 256 "Plume-$VERSION.dmg") | tee "dist/Plume-$VERSION.dmg.sha256"
 
       # Provenance signée (Sigstore) : gh attestation verify Plume-x.y.z.dmg -R samr037/plume
       - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
