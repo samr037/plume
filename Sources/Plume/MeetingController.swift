@@ -520,70 +520,128 @@ final class MeetingCardModel: ObservableObject {
     @Published var visible = false
 }
 
+/// Pendant l'enregistrement : une pastille compacte (point rouge, minuteur, niveaux, arrêt).
+/// Détection et messages : une petite carte. Les deux se déplacent en les faisant glisser.
 struct MeetingCardView: View {
     @ObservedObject var model: MeetingCardModel
     var onRecord: () -> Void
     var onDismiss: () -> Void
     var onStop: () -> Void
+    var onDragChanged: () -> Void
+    var onDragEnded: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        Group {
-            switch model.phase {
-            case .hidden:
-                EmptyView()
-            case .detected(let title, let app, let countdown):
-                VStack(alignment: .leading, spacing: 8) {
-                    Label("Réunion détectée", systemImage: "person.2.wave.2").font(.headline).foregroundStyle(Theme.accent)
-                    Text("\(title) · \(app)").font(.callout).foregroundStyle(.secondary).lineLimit(1)
-                    HStack {
-                        Button(countdown.map { String(localized: "Enregistrer (\($0) s)") } ?? String(localized: "Prendre des notes"), action: onRecord).buttonStyle(.borderedProminent)
-                        Button("Ignorer", action: onDismiss)
-                    }
+        content
+            .tint(Theme.accent)
+            .foregroundStyle(Theme.text)
+            .fixedSize()
+            .contentShape(Rectangle())
+            // Glisser n'importe où sur la carte la déplace ; les boutons gardent leurs clics (seuil de 3 points).
+            .gesture(DragGesture(minimumDistance: 3, coordinateSpace: .global)
+                .onChanged { _ in onDragChanged() }
+                .onEnded { _ in onDragEnded() })
+            .offset(y: model.visible || reduceMotion ? 0 : -12)
+            .opacity(model.visible ? 1 : 0)
+            .padding(10) // place pour l'ombre
+    }
+
+    @ViewBuilder private var content: some View {
+        switch model.phase {
+        case .hidden:
+            EmptyView()
+        case .recording(let title, let startedAt):
+            HStack(spacing: 9) {
+                RecDot()
+                Text(startedAt, style: .timer)
+                    .font(.system(size: 12, weight: .semibold).monospacedDigit())
+                    .frame(minWidth: 52, alignment: .leading)
+                HStack(spacing: 3) {
+                    MiniMeter(level: model.micLevel)
+                    MiniMeter(level: model.systemLevel)
                 }
-            case .recording(let title, let startedAt):
-                HStack(spacing: 10) {
-                    Circle().fill(.red).frame(width: 9, height: 9)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(title).font(.callout.weight(.medium)).lineLimit(1)
-                        Text(startedAt, style: .timer).font(.caption.monospacedDigit()).foregroundStyle(.secondary)
-                    }
-                    Spacer(minLength: 8)
-                    LevelBar(level: model.micLevel, symbol: "mic")
-                    LevelBar(level: model.systemLevel, symbol: "speaker.wave.2")
-                    Button("Arrêter", action: onStop)
+                .help("Micro · son de l'appel")
+                Button(action: onStop) {
+                    Image(systemName: "stop.fill").font(.system(size: 9, weight: .bold))
+                        .frame(width: 22, height: 22)
+                        .background(Circle().fill(Color.red.opacity(0.16)))
+                        .foregroundStyle(.red)
                 }
-            case .message(let text):
-                Label(text, systemImage: "doc.text").font(.callout)
+                .buttonStyle(.plain)
+                .help("Arrêter l'enregistrement")
             }
+            .padding(.leading, 12).padding(.trailing, 6).padding(.vertical, 6)
+            .background(Capsule().fill(Theme.card))
+            .overlay(Capsule().strokeBorder(Theme.cardStroke))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+            .help(title)
+        case .detected(let title, let app, let countdown):
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "person.2.wave.2").foregroundStyle(Theme.accent)
+                    Text("Réunion détectée").font(.system(size: 12, weight: .semibold))
+                    Spacer(minLength: 8)
+                    Button(action: onDismiss) { Image(systemName: "xmark").font(.system(size: 9, weight: .bold)) }
+                        .buttonStyle(.plain).foregroundStyle(Theme.textSecondary).help("Ignorer")
+                }
+                Text("\(title) · \(app)").font(.system(size: 11)).foregroundStyle(Theme.textSecondary).lineLimit(1)
+                Button(action: onRecord) {
+                    Label(countdown.map { String(localized: "Enregistrer (\($0) s)") } ?? String(localized: "Prendre des notes"),
+                          systemImage: "record.circle")
+                        .font(.system(size: 12, weight: .semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        // Style plein dessiné à la main : un panneau non activant n'est jamais « clé »,
+                        // et .borderedProminent y perd sa couleur.
+                        .background(Theme.accent, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        .foregroundStyle(.white)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(12)
+            .frame(width: 250, alignment: .leading)
+            .modifier(CardBackground())
+        case .message(let text):
+            Label(text, systemImage: "doc.text").font(.system(size: 12)).lineLimit(2)
+                .padding(.horizontal, 12).padding(.vertical, 9)
+                .frame(maxWidth: 280, alignment: .leading)
+                .modifier(CardBackground())
         }
-        .padding(14)
-        .frame(width: 340, alignment: .leading)
-        .background(Theme.card, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(Theme.cardStroke))
-        .shadow(color: .black.opacity(0.18), radius: 12, y: 4)
-        .tint(Theme.accent)
-        .foregroundStyle(Theme.text)
-        .animation(.spring(response: 0.35, dampingFraction: 0.85), value: model.phase)
-        .offset(x: model.visible || reduceMotion ? 0 : 40)
-        .opacity(model.visible ? 1 : 0)
-        .padding(8)
     }
 }
 
-private struct LevelBar: View {
-    var level: Float
-    var symbol: String
+private struct CardBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background(Theme.card, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(Theme.cardStroke))
+            .shadow(color: .black.opacity(0.16), radius: 8, y: 3)
+    }
+}
+
+/// Point rouge qui respire doucement (fixe si « Réduire les animations »).
+/// TimelineView plutôt que @State : les Command Line Tools n'ont pas le plugin des macros SwiftUI.
+private struct RecDot: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var body: some View {
-        VStack(spacing: 2) {
-            Image(systemName: symbol).font(.system(size: 9)).foregroundStyle(.secondary)
-            GeometryReader { g in
-                ZStack(alignment: .bottom) {
-                    Capsule().fill(Color.primary.opacity(0.1))
-                    Capsule().fill(Theme.accent).frame(height: g.size.height * CGFloat(level))
-                }
-            }.frame(width: 4, height: 18)
+        TimelineView(.animation(minimumInterval: 1.0 / 15, paused: reduceMotion)) { ctx in
+            let t = ctx.date.timeIntervalSinceReferenceDate
+            Circle().fill(.red).frame(width: 8, height: 8)
+                .opacity(reduceMotion ? 1 : 0.65 + 0.35 * cos(t * 3.4))
         }
+    }
+}
+
+private struct MiniMeter: View {
+    var level: Float
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Capsule().fill(Color.primary.opacity(0.1))
+            Capsule().fill(Theme.accent).frame(height: max(2, 16 * CGFloat(min(max(level, 0), 1))))
+        }
+        .frame(width: 3, height: 16)
+        .animation(.easeOut(duration: 0.1), value: level)
     }
 }
 
@@ -591,20 +649,32 @@ private struct LevelBar: View {
 final class MeetingCardController {
     let model = MeetingCardModel()
     private let panel: NSPanel
+    private let host: NSHostingView<MeetingCardView>
     private var hideWork: DispatchWorkItem?
+    private var drag: (mouse: NSPoint, origin: NSPoint)?
+    /// Coin haut-droit de la carte, mémorisé après un glisser (sinon : en haut à droite de l'écran).
+    private static let anchorKey = "meetingCardAnchor"
 
     init(onRecord: @escaping () -> Void, onDismiss: @escaping () -> Void, onStop: @escaping () -> Void) {
-        panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 360, height: 130),
+        panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 200, height: 50),
                         styleMask: [.nonactivatingPanel, .borderless], backing: .buffered, defer: true)
         panel.level = .statusBar
         panel.isOpaque = false
         panel.backgroundColor = .clear
+        panel.hasShadow = false
         panel.hidesOnDeactivate = false
         panel.becomesKeyOnlyIfNeeded = true
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
         // Invisible dans les partages d'écran.
         panel.sharingType = .none
-        panel.contentView = NSHostingView(rootView: MeetingCardView(model: model, onRecord: onRecord, onDismiss: onDismiss, onStop: onStop))
+        var dragChanged: () -> Void = {}
+        var dragEnded: () -> Void = {}
+        host = NSHostingView(rootView: MeetingCardView(model: model, onRecord: onRecord, onDismiss: onDismiss, onStop: onStop,
+                                                       onDragChanged: { dragChanged() }, onDragEnded: { dragEnded() }))
+        host.sizingOptions = []
+        panel.contentView = host
+        dragChanged = { [weak self] in self?.dragMoved() }
+        dragEnded = { [weak self] in self?.dragFinished() }
     }
 
     func showDetected(title: String, app: String, countdown: Int?) { show(.detected(title: title, app: app, countdown: countdown)) }
@@ -619,16 +689,15 @@ final class MeetingCardController {
 
     private func show(_ phase: MeetingCardModel.Phase, autoHide: TimeInterval? = nil) {
         hideWork?.cancel()
-        let wasHidden = model.phase == .hidden
+        let wasHidden = model.phase == .hidden || !panel.isVisible
+        let changed = model.phase != phase
         model.phase = phase
         guard phase != .hidden else { panel.orderOut(nil); model.visible = false; return }
-        if let screen = NSScreen.main {
-            let vf = screen.visibleFrame
-            panel.setFrame(NSRect(x: vf.maxX - 372, y: vf.maxY - 142, width: 360, height: 130), display: true)
-        }
+        // Le panneau épouse la carte : aucune zone transparente qui capterait les clics autour.
+        if changed || wasHidden { fitToContent() }
         panel.orderFrontRegardless()
         if wasHidden {
-            DispatchQueue.main.async { withAnimation(.timingCurve(0.16, 1, 0.3, 1, duration: 0.4)) { self.model.visible = true } }
+            DispatchQueue.main.async { withAnimation(.timingCurve(0.16, 1, 0.3, 1, duration: 0.35)) { self.model.visible = true } }
         }
         if let autoHide {
             let w = DispatchWorkItem { [weak self] in
@@ -638,5 +707,61 @@ final class MeetingCardController {
             hideWork = w
             DispatchQueue.main.asyncAfter(deadline: .now() + autoHide, execute: w)
         }
+    }
+
+    // MARK: Taille et position
+
+    private var screen: NSScreen? {
+        if panel.isVisible, let s = panel.screen { return s }
+        return NSScreen.main
+    }
+
+    /// Ajuste le panneau à la carte en gardant le coin haut-droit fixe.
+    private func fitToContent() {
+        host.layoutSubtreeIfNeeded()
+        let size = host.fittingSize
+        guard size.width > 0, size.height > 0, let vf = screen?.visibleFrame else { return }
+        var anchor = NSPoint(x: vf.maxX, y: vf.maxY)
+        if let s = UserDefaults.standard.string(forKey: Self.anchorKey) {
+            let p = NSPointFromString(s)
+            if p != .zero { anchor = p }
+        }
+        var frame = NSRect(x: anchor.x - size.width, y: anchor.y - size.height, width: size.width, height: size.height)
+        frame = clamped(frame)
+        panel.setFrame(frame, display: true)
+    }
+
+    /// Garde la carte entière dans l'écran qui la porte (ou le plus proche).
+    private func clamped(_ f: NSRect) -> NSRect {
+        let center = NSPoint(x: f.midX, y: f.midY)
+        let s = NSScreen.screens.first { NSMouseInRect(center, $0.frame, false) } ?? screen
+        guard let vf = s?.visibleFrame else { return f }
+        var r = f
+        r.origin.x = min(max(r.minX, vf.minX), vf.maxX - r.width)
+        r.origin.y = min(max(r.minY, vf.minY), vf.maxY - r.height)
+        return r
+    }
+
+    private func dragMoved() {
+        let mouse = NSEvent.mouseLocation
+        if drag == nil { drag = (mouse, panel.frame.origin) }
+        guard let d = drag else { return }
+        panel.setFrameOrigin(NSPoint(x: d.origin.x + mouse.x - d.mouse.x, y: d.origin.y + mouse.y - d.mouse.y))
+    }
+
+    private func dragFinished() {
+        guard drag != nil else { return }
+        drag = nil
+        var f = clamped(panel.frame)
+        // Aimantation : à moins de 24 points d'un bord, la carte s'y colle.
+        if let vf = panel.screen?.visibleFrame ?? screen?.visibleFrame {
+            let snap: CGFloat = 24
+            if f.minX - vf.minX < snap { f.origin.x = vf.minX }
+            if vf.maxX - f.maxX < snap { f.origin.x = vf.maxX - f.width }
+            if f.minY - vf.minY < snap { f.origin.y = vf.minY }
+            if vf.maxY - f.maxY < snap { f.origin.y = vf.maxY - f.height }
+        }
+        panel.setFrame(f, display: true, animate: true)
+        UserDefaults.standard.set(NSStringFromPoint(NSPoint(x: f.maxX, y: f.maxY)), forKey: Self.anchorKey)
     }
 }

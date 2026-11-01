@@ -146,8 +146,13 @@ final class HotkeyService {
 
         case .keyDown:
             // Réconciliation : fn relâché sans flagsChanged reçu (tap désactivé un instant, sécurité clavier…).
-            if fnHeld && !CGEventSource.flagsState(.hidSystemState).contains(.maskSecondaryFn) {
+            // Les touches que macOS traduit via fn (Suppr → Suppr avant, flèches → Début/Fin…) portent le drapeau fn
+            // alors que l'état matériel peut le perdre : se fier d'abord à l'événement, sinon fn+Suppr
+            // terminait la prise (transcription) au lieu de l'annuler.
+            if fnHeld, !event.flags.contains(.maskSecondaryFn),
+               !CGEventSource.flagsState(.hidSystemState).contains(.maskSecondaryFn) {
                 fnHeld = false
+                Log.write("fn relâché sans événement (touche \(code)) : fin de prise")
                 _ = feed(.fnUp(now))
             }
             if swallowedKeyUps.contains(code), event.getIntegerValueField(.keyboardEventAutorepeat) != 0 { return true }
@@ -158,7 +163,9 @@ final class HotkeyService {
             }
             if fnHeld {
                 if code == 49, feed(.spaceWhileFn) { swallowedKeyUps.insert(code); return true }
+                let wasRecording = isRecording
                 _ = feed(.otherKeyWhileFn(now))
+                if wasRecording, !isRecording { Log.write("Prise annulée : touche \(code) avec fn") }
                 return false
             }
             let f = event.flags

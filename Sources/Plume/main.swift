@@ -69,6 +69,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                                              onDragChanged: {}, onDragEnded: { _ in }),
                                               size: NSSize(width: 320, height: 200), dark: dark, to: dir.appendingPathComponent("bar-\(name)-\(suffix).png"))
                     }
+                    let cards: [(String, MeetingCardModel.Phase)] = [
+                        ("detected", .detected(title: "Point hebdo produit", app: "Google Meet", countdown: 8)),
+                        ("recording", .recording(title: "Point hebdo produit", startedAt: Date().addingTimeInterval(-754))),
+                        ("message", .message("Notes prêtes : Point hebdo produit")),
+                    ]
+                    for (name, phase) in cards {
+                        let m = MeetingCardModel()
+                        m.phase = phase; m.visible = true; m.micLevel = 0.6; m.systemLevel = 0.35
+                        await Snapshot.render(MeetingCardView(model: m, onRecord: {}, onDismiss: {}, onStop: {}, onDragChanged: {}, onDragEnded: {}),
+                                              size: NSSize(width: 300, height: 140), dark: dark, to: dir.appendingPathComponent("meeting-\(name)-\(suffix).png"))
+                    }
                     // Base temporaire : le brouillon d'exemple ne doit jamais atteindre la vraie base.
                     let tmpStore = try! Store(path: FileManager.default.temporaryDirectory.appendingPathComponent("wl-snap-\(UUID()).sqlite").path)
                     let pad = ScratchpadModel(store: tmpStore)
